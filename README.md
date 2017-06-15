@@ -26,5 +26,5 @@ Step 2. Add the dependency
                     public void location(double latitude, double longitude) {
                         //latitude:经度 longitude：纬度
                     }
-                });   
+  });   
   ```
