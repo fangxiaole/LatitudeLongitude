@@ -18,7 +18,7 @@ Step 2. Add the dependency
   1.初始化百度定位SDK（最好在Application中）  
   ```
    LocationUtils.getInstance().initLocationSDK(getApplicationContext());
-  ```
+  ```     
   2.获取定位经纬度
   ```
   LocationUtils.getInstance().getLocation(getApplicationContext(), new LocationUtils.GetLocationListener() {
