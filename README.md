@@ -15,12 +15,12 @@ Step 2. Add the dependency
 	        compile 'com.github.fangxiaole:LatitudeLongitude:v1.1'
 	}
  ### 使用说明：
-  1.初始化百度定位SDK（最好在Application中）  
-  ```
-   LocationUtils.getInstance().initLocationSDK(getApplicationContext());
-  ```     
-  2.获取定位经纬度
+  1.初始化百度定位SDK（最好在Application中)
+  ```Java
+  LocationUtils.getInstance().initLocationSDK(getApplicationContext());
   ```
+  2.获取定位经纬度
+  ```Java
   LocationUtils.getInstance().getLocation(getApplicationContext(), new LocationUtils.GetLocationListener() {
                     @Override
                     public void location(double latitude, double longitude) {
