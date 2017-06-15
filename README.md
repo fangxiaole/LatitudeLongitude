@@ -28,3 +28,9 @@ Step 2. Add the dependency
                     }
   });   
   ```
+  2.两个位置之间的距离是否在指定范围内      
+  ```Java
+  LatLng latLng1=new LatLng(22.615255,114.035641);//位置1
+  LatLng latLng2=new LatLng(22.608449,114.126047);//位置2
+  DistanceUtils.isInDistance(latLng1,latLng2,200);//返回是否在200米以内
+  ```
