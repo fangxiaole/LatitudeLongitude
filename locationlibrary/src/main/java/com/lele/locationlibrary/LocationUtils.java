@@ -8,6 +8,8 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 
+import static com.baidu.location.b.b.a;
+
 /**
  * Created by lele on 2017/6/12.
  */
@@ -16,6 +18,7 @@ public class LocationUtils {
     static LocationUtils locationUtils;
     private Context context;
     LocationClient locationClient;
+    private String CoorType=CoordinateType.gcj02;
 
     public static LocationUtils getInstance() {
         if (locationUtils == null) {
@@ -33,6 +36,11 @@ public class LocationUtils {
         SDKInitializer.initialize(context);
     }
 
+    /**
+     * 获取经纬度
+     * @param context
+     * @param listener
+     */
     public void getLocation(Context context, GetLocationListener listener) {
         this.listener = listener;
         locationClient = new LocationClient(context);
@@ -41,6 +49,23 @@ public class LocationUtils {
         startLocation();
 
     }
+
+    /**
+     * 获取经纬度
+     * @param context
+     * @param coorType 获取到的坐标类型 CoordinateType
+     * @param listener
+     */
+    public void getLocation(Context context,String coorType, GetLocationListener listener) {
+        this.listener = listener;
+        this.CoorType=coorType;
+        locationClient = new LocationClient(context);
+        locationClient.registerLocationListener(bdLocationListener);
+        locationClient.setLocOption(getLocationClientOption());
+        startLocation();
+
+    }
+
 
     /**
      * 开始定位
@@ -92,7 +117,7 @@ public class LocationUtils {
         LocationClientOption mOption = new LocationClientOption();
         mOption = new LocationClientOption();
         mOption.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
-        mOption.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系，如果配合百度地图使用，建议设置为bd09ll;
+        mOption.setCoorType(CoorType);//可选，默认gcj02，设置返回的定位结果坐标系，如果配合百度地图使用，建议设置为bd09ll;
         mOption.setScanSpan(3000);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
         mOption.setIsNeedAddress(false);//可选，设置是否需要地址信息，默认不需要
         mOption.setIsNeedLocationDescribe(false);//可选，设置是否需要地址描述
@@ -106,4 +131,17 @@ public class LocationUtils {
         return mOption;
     }
 
+    public String getCoorType() {
+        return CoorType;
+    }
+    //设置坐标类型
+    public void setCoorType(String coorType) {
+        CoorType = coorType;
+    }
+
+    class CoordinateType{
+        public static final String gcj02="gcj02";//国测局坐标；
+        public static final String bd09="bd09"; // 百度墨卡托坐标；
+        public static final String bd09ll="bd09ll";//百度经纬度坐标；
+    }
 }

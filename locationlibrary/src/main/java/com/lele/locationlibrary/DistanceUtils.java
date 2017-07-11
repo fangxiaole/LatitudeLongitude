@@ -1,5 +1,7 @@
 package com.lele.locationlibrary;
 
+import android.util.Log;
+
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.DistanceUtil;
 
