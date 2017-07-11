@@ -30,6 +30,7 @@ import android.widget.Toast;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.CoordinateConverter;
 import com.baidu.mapapi.utils.DistanceUtil;
+import com.baidu.platform.comapi.location.CoordinateType;
 import com.lele.locationlibrary.CoordinateTransformUtil;
 import com.lele.locationlibrary.DistanceUtils;
 import com.lele.locationlibrary.LocationUtils;
@@ -128,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         for(int i=0;i<100;i++){
-                            LocationUtils.getInstance().getLocation(getApplicationContext(), new LocationUtils.GetLocationListener() {
+                            LocationUtils.getInstance().getLocation(getApplicationContext(),new LocationUtils.GetLocationListener() {
                                 @Override
                                 public void location(final double latitude, final double longitude) {
                                     Log.e("leleTest", "latitude="+latitude+"longitude="+longitude);
@@ -142,20 +143,20 @@ public class MainActivity extends AppCompatActivity {
                                             @Override
                                             public void run() {
                                                 tx_location.append("latitude="+latitude+"longitude="+longitude+"\n");
-                                                double[] c_location= CoordinateTransformUtil.gcj02towgs84(longitude,latitude);
-                                                tx_location.append("latitude="+c_location[0]+"longitude="+c_location[1]+"\n");
+//                                                double[] c_location= CoordinateTransformUtil.gcj02towgs84(longitude,latitude);
+//                                                tx_location.append("latitude="+c_location[0]+"longitude="+c_location[1]+"\n");
                                                 tx_location.append(""+ d+"\n");
-                                                LatLng ios=new LatLng(22.646702,114.121059);
-                                                LatLng latLng3=new LatLng(c_location[1],c_location[0]);
-                                                double distence=DistanceUtil.getDistance(ios,latLng2);
-                                                double distence2=DistanceUtil.getDistance(ios,latLng3);
-                                                if(distence>distence2){
-                                                    k++;
-                                                }else{
-                                                    j++;
-                                                }
-                                                tx_location.append(k+"before-->"+distence+"\n");
-                                                tx_location.append(j+"after-->"+distence2+"\n");
+//                                                LatLng ios=new LatLng(22.646702,114.121059);
+//                                                LatLng latLng3=new LatLng(c_location[1],c_location[0]);
+//                                                double distence=DistanceUtil.getDistance(ios,latLng2);
+//                                                double distence2=DistanceUtil.getDistance(ios,latLng3);
+//                                                if(distence>distence2){
+//                                                    k++;
+//                                                }else{
+//                                                    j++;
+//                                                }
+//                                                tx_location.append(k+"before-->"+distence+"\n");
+//                                                tx_location.append(j+"after-->"+distence2+"\n");
                                             }
                                         });
                                         Log.e("leleTest", DistanceUtil.getDistance(latLng1,latLng2)+"");

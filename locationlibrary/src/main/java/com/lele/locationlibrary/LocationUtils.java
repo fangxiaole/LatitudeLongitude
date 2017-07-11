@@ -1,6 +1,7 @@
 package com.lele.locationlibrary;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -18,7 +19,7 @@ public class LocationUtils {
     static LocationUtils locationUtils;
     private Context context;
     LocationClient locationClient;
-    private String CoorType=CoordinateType.gcj02;
+    private String CoorType=CoordinateType.wgs84;
 
     public static LocationUtils getInstance() {
         if (locationUtils == null) {
@@ -37,7 +38,7 @@ public class LocationUtils {
     }
 
     /**
-     * 获取经纬度
+     * 获取经纬度(WGS84)
      * @param context
      * @param listener
      */
@@ -93,7 +94,14 @@ public class LocationUtils {
             int result = bdLocation.getLocType();
             if (result == 161 || result == 61) {
                 if (listener != null) {
-                    listener.location(bdLocation.getLatitude(), bdLocation.getLongitude());
+                    if(CoorType.equals(CoordinateType.wgs84)){
+                        double[] wgs64=CoordinateTransformUtil.gcj02towgs84(bdLocation.getLongitude(),bdLocation.getLatitude());
+                        if(wgs64!=null&&wgs64.length==2){
+                            listener.location(wgs64[1], wgs64[0]);
+                        }
+                    }else{
+                        listener.location(bdLocation.getLatitude(), bdLocation.getLongitude());
+                    }
                 }
                 stopLocation();
             }
@@ -117,7 +125,12 @@ public class LocationUtils {
         LocationClientOption mOption = new LocationClientOption();
         mOption = new LocationClientOption();
         mOption.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
-        mOption.setCoorType(CoorType);//可选，默认gcj02，设置返回的定位结果坐标系，如果配合百度地图使用，建议设置为bd09ll;
+        if(CoorType.equals(CoordinateType.wgs84)){
+            //百度定位国内不返回WGS84坐标，先获取gcj02坐标，获取到之后在转换为WGS84坐标
+            mOption.setCoorType(CoordinateType.gcj02);
+        }else{
+            mOption.setCoorType(CoorType);//可选，默认gcj02，设置返回的定位结果坐标系，如果配合百度地图使用，建议设置为bd09ll;
+        }
         mOption.setScanSpan(3000);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
         mOption.setIsNeedAddress(false);//可选，设置是否需要地址信息，默认不需要
         mOption.setIsNeedLocationDescribe(false);//可选，设置是否需要地址描述
@@ -143,5 +156,6 @@ public class LocationUtils {
         public static final String gcj02="gcj02";//国测局坐标；
         public static final String bd09="bd09"; // 百度墨卡托坐标；
         public static final String bd09ll="bd09ll";//百度经纬度坐标；
+        public static final String wgs84="wgs84";//WGS84
     }
 }
