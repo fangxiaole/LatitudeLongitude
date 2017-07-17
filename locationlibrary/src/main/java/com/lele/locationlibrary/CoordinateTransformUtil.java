@@ -105,7 +105,7 @@ public class CoordinateTransformUtil {
         }
 
         /**
-         * GCJ02(火星坐标系)转GPS84
+         * GCJ02(火星坐标系)转GPS84 精确到小数点后六位
          *
          * @param lng 火星坐标系的经度
          * @param lat 火星坐标系纬度
