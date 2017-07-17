@@ -1,6 +1,8 @@
 package com.lele.locationlibrary;
 
 
+import java.math.BigDecimal;
+
 /**
  * Created by lele on 2017/7/11.
  */
@@ -123,7 +125,9 @@ public class CoordinateTransformUtil {
             dlng = (dlng * 180.0) / (a / sqrtmagic * Math.cos(radlat) * pi);
             double mglat = lat + dlat;
             double mglng = lng + dlng;
-            return new double[] { lng * 2 - mglng, lat * 2 - mglat };
+            double f1=new BigDecimal(lng * 2 - mglng).setScale(6,BigDecimal.ROUND_HALF_UP).doubleValue();
+            double f2 = new BigDecimal(lat * 2 - mglat).setScale(6,BigDecimal.ROUND_HALF_UP).doubleValue();
+            return new double[] {f1,f2};
         }
 
         /**

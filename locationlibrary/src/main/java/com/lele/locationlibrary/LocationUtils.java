@@ -54,7 +54,7 @@ public class LocationUtils {
     /**
      * 获取经纬度
      * @param context
-     * @param coorType 获取到的坐标类型 CoordinateType
+     * @param coorType 获取到的坐标类型 {@link CoordinateType}
      * @param listener
      */
     public void getLocation(Context context,String coorType, GetLocationListener listener) {
@@ -152,7 +152,7 @@ public class LocationUtils {
         CoorType = coorType;
     }
 
-    class CoordinateType{
+    public class CoordinateType{
         public static final String gcj02="gcj02";//国测局坐标；
         public static final String bd09="bd09"; // 百度墨卡托坐标；
         public static final String bd09ll="bd09ll";//百度经纬度坐标；
